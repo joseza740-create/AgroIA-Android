@@ -1,26 +1,5 @@
-name: Generar APK Agro IA
-
-on:
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Descargar proyecto
-        uses: actions/checkout@v4
-
-      - name: Crear proyecto Android
-        run: |
-          mkdir -p app/src/main/assets
-          cp index.html app/src/main/assets/index.html
-
-      - name: Preparar compilación
-        run: |
-          echo "Preparando APK de Agro IA..."
-          ls -la
-
-      - name: Resultado
-        run: |
-          echo "Proyecto preparado correctamente."
+- name: Guardar APK
+  uses: actions/upload-artifact@v4
+  with:
+    name: AgroIA-APK
+    path: app/build/outputs/apk/debug/app-debug.apk
