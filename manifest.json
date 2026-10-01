@@ -1,0 +1,11 @@
+{
+  "name": "Agro IA",
+  "short_name": "Agro IA",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2e7d32",
+  "orientation": "portrait",
+  "description": "Aplicación de diagnóstico de plantas Agro IA",
+  "icons": []
+}
