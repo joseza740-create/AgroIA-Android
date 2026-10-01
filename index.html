@@ -1,0 +1,2791 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17613d">
+
+<title>Agro IA 5.0</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f8f5;
+  color:#18352a;
+  line-height:1.5;
+}
+
+button,
+select,
+input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+header{
+  background:white;
+  border-bottom:1px solid #dce9e1;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.navbar{
+  max-width:1200px;
+  margin:auto;
+  min-height:74px;
+  padding:10px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-logo{
+  width:48px;
+  height:48px;
+}
+
+.brand-text{
+  font-weight:bold;
+  color:#17613d;
+  letter-spacing:.5px;
+}
+
+.brand-text small{
+  display:block;
+  font-size:11px;
+  color:#71847a;
+  letter-spacing:1px;
+}
+
+nav{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+nav button{
+  border:0;
+  background:transparent;
+  color:#4c6559;
+  padding:9px 12px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+nav button:hover,
+nav button.active{
+  background:#e8f5ed;
+  color:#17613d;
+}
+
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:24px 18px 60px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HERO */
+
+.hero{
+  background:linear-gradient(135deg,#17613d,#39a96b);
+  color:white;
+  border-radius:24px;
+  padding:45px 30px;
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:30px;
+  align-items:center;
+  box-shadow:0 15px 40px rgba(23,97,61,.16);
+}
+
+.hero h1{
+  font-size:clamp(32px,5vw,56px);
+  margin-bottom:15px;
+}
+
+.hero p{
+  max-width:650px;
+  font-size:18px;
+  opacity:.94;
+}
+
+.hero-buttons{
+  margin-top:25px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.hero-visual{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:25px;
+  min-height:240px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-visual svg{
+  width:180px;
+  height:180px;
+}
+
+.section-title{
+  margin:35px 0 16px;
+}
+
+.section-title h2{
+  font-size:28px;
+}
+
+.section-title p{
+  color:#708177;
+}
+
+/* BUTTONS */
+
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:12px 18px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn-primary{
+  background:#17613d;
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#104b2f;
+}
+
+.btn-secondary{
+  background:#e7f4ec;
+  color:#17613d;
+}
+
+.btn-white{
+  background:white;
+  color:#17613d;
+}
+
+.btn-danger{
+  background:#ffe8e8;
+  color:#a12a2a;
+}
+
+/* SCANNER */
+
+.scanner-page{
+  max-width:900px;
+  margin:auto;
+}
+
+.scanner-title{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.scanner-title h1{
+  color:#17613d;
+  font-size:36px;
+}
+
+.scanner-title p{
+  color:#718078;
+}
+
+.scan-card{
+  background:white;
+  border:1px solid #dce9e1;
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 10px 30px rgba(31,90,57,.07);
+}
+
+.scan-step{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  margin-bottom:22px;
+}
+
+.step-number{
+  width:34px;
+  height:34px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:#17613d;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.step-content{
+  width:100%;
+}
+
+.step-content h3{
+  margin-bottom:5px;
+}
+
+.step-content p{
+  color:#718078;
+  font-size:14px;
+}
+
+.camera-box{
+  width:100%;
+  background:#10251b;
+  border-radius:18px;
+  overflow:hidden;
+  margin-top:14px;
+  position:relative;
+  min-height:250px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#video{
+  width:100%;
+  max-height:480px;
+  object-fit:cover;
+  display:none;
+}
+
+#photoCanvas{
+  display:none;
+}
+
+.camera-placeholder{
+  color:white;
+  text-align:center;
+  padding:40px;
+}
+
+.camera-placeholder strong{
+  display:block;
+  font-size:20px;
+  margin-bottom:6px;
+}
+
+.preview{
+  display:none;
+  margin-top:15px;
+  text-align:center;
+}
+
+.preview img{
+  max-width:100%;
+  max-height:400px;
+  border-radius:15px;
+  border:1px solid #dce9e1;
+}
+
+.camera-controls{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.upload-label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+input[type=file]{
+  display:none;
+}
+
+/* OPTIONAL PLANT */
+
+.optional-box{
+  background:#f7fbf8;
+  border:1px solid #dce9e1;
+  border-radius:15px;
+  padding:16px;
+  margin-top:10px;
+}
+
+.optional-box label{
+  font-weight:bold;
+  display:block;
+  margin-bottom:8px;
+}
+
+select,
+input[type=text]{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #cadbd1;
+  border-radius:10px;
+  background:white;
+  color:#18352a;
+  outline:none;
+}
+
+select:focus,
+input[type=text]:focus{
+  border-color:#39a96b;
+}
+
+/* SYMPTOMS */
+
+.symptoms{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:9px;
+  margin-top:12px;
+}
+
+.symptom{
+  border:1px solid #d8e5dd;
+  background:white;
+  border-radius:11px;
+  padding:11px;
+  cursor:pointer;
+  display:flex;
+  gap:9px;
+  align-items:center;
+}
+
+.symptom input{
+  width:auto;
+}
+
+.symptom.selected{
+  border-color:#39a96b;
+  background:#eff9f2;
+}
+
+.analyze-area{
+  margin-top:22px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.status{
+  display:none;
+  padding:12px;
+  border-radius:10px;
+  margin-top:14px;
+  font-size:14px;
+}
+
+.status.show{
+  display:block;
+}
+
+.status.info{
+  background:#eaf4ff;
+  color:#245b82;
+}
+
+.status.success{
+  background:#e8f7ed;
+  color:#17613d;
+}
+
+.status.error{
+  background:#ffeaea;
+  color:#9b2929;
+}
+
+/* RESULT */
+
+.result{
+  display:none;
+  margin-top:25px;
+  background:white;
+  border:1px solid #dce9e1;
+  border-radius:22px;
+  padding:25px;
+}
+
+.result.show{
+  display:block;
+}
+
+.result-header{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.result-header h2{
+  color:#17613d;
+}
+
+.score{
+  background:#e8f5ed;
+  color:#17613d;
+  padding:9px 13px;
+  border-radius:20px;
+  font-weight:bold;
+}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-top:20px;
+}
+
+.result-box{
+  background:#f7faf8;
+  border-radius:14px;
+  padding:16px;
+}
+
+.result-box h4{
+  color:#17613d;
+  margin-bottom:5px;
+}
+
+.warning{
+  background:#fff7df;
+  border:1px solid #f1df9d;
+  color:#705d1c;
+  padding:14px;
+  border-radius:12px;
+  margin-top:18px;
+  font-size:14px;
+}
+
+/* PLANTS */
+
+.toolbar{
+  background:white;
+  border:1px solid #dce9e1;
+  padding:16px;
+  border-radius:16px;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.plants-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:15px;
+}
+
+.plant-card{
+  background:white;
+  border:1px solid #dce9e1;
+  border-radius:17px;
+  padding:18px;
+  transition:.2s;
+}
+
+.plant-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(31,90,57,.08);
+}
+
+.plant-icon{
+  width:50px;
+  height:50px;
+  border-radius:15px;
+  background:#e8f5ed;
+  color:#17613d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.plant-card h3{
+  margin-bottom:3px;
+}
+
+.plant-card p{
+  color:#74837b;
+  font-size:13px;
+}
+
+/* PROBLEMS */
+
+.problem-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:15px;
+}
+
+.problem-card{
+  background:white;
+  border:1px solid #dce9e1;
+  border-radius:17px;
+  padding:19px;
+}
+
+.problem-card h3{
+  color:#17613d;
+  margin-bottom:6px;
+}
+
+.problem-card p{
+  color:#708177;
+}
+
+/* HISTORY */
+
+.history-list{
+  display:grid;
+  gap:12px;
+}
+
+.history-card{
+  background:white;
+  border:1px solid #dce9e1;
+  border-radius:15px;
+  padding:17px;
+}
+
+.history-card strong{
+  color:#17613d;
+}
+
+.empty{
+  background:white;
+  border:1px dashed #cbdcd2;
+  padding:35px;
+  border-radius:17px;
+  text-align:center;
+  color:#728078;
+}
+
+/* FOOTER */
+
+footer{
+  background:#10251b;
+  color:#cbdad2;
+  padding:30px 18px;
+}
+
+.footer-inner{
+  max-width:1200px;
+  margin:auto;
+}
+
+footer strong{
+  color:white;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+
+  .navbar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  nav{
+    width:100%;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+  }
+
+  nav button{
+    white-space:nowrap;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+    padding:30px 20px;
+  }
+
+  .hero-visual{
+    min-height:180px;
+  }
+
+  .toolbar{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:500px){
+
+  main{
+    padding:15px 12px 45px;
+  }
+
+  .scan-card{
+    padding:17px;
+  }
+
+  .scanner-title h1{
+    font-size:29px;
+  }
+
+  .hero h1{
+    font-size:36px;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .camera-controls .btn,
+  .analyze-area .btn{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="navbar">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="112" height="112" rx="30" fill="#eaf7ef"/>
+          <path d="M28 78 H43 L52 69 V52 L63 41 H82"
+                fill="none"
+                stroke="#1f7a4d"
+                stroke-width="5"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+          <circle cx="28" cy="78" r="6" fill="#39a96b"/>
+          <circle cx="52" cy="52" r="6" fill="#39a96b"/>
+          <circle cx="63" cy="41" r="6" fill="#39a96b"/>
+          <circle cx="82" cy="41" r="6" fill="#39a96b"/>
+          <path d="M58 88 C58 70 58 58 58 48"
+                fill="none"
+                stroke="#17613d"
+                stroke-width="6"
+                stroke-linecap="round"/>
+          <path d="M57 65 C38 64 30 51 32 36 C48 37 58 48 57 65Z"
+                fill="#39a96b"/>
+          <path d="M59 59 C61 40 74 30 91 29 C91 47 79 59 59 59Z"
+                fill="#1f7a4d"/>
+          <path d="M36 40 C44 47 51 56 56 64"
+                fill="none"
+                stroke="#ffffff"
+                stroke-width="3"
+                stroke-linecap="round"/>
+          <circle cx="58" cy="88" r="7" fill="#17613d"/>
+        </svg>
+      </div>
+
+      <div class="brand-text">
+        AGRO IA
+        <small>5.0 SMART PLANT</small>
+      </div>
+
+    </div>
+
+    <nav>
+      <button class="nav-btn active" data-page="home">Inicio</button>
+      <button class="nav-btn" data-page="scan">Escanear planta</button>
+      <button class="nav-btn" data-page="plants">Plantas</button>
+      <button class="nav-btn" data-page="problems">Problemas</button>
+      <button class="nav-btn" data-page="history">Historial</button>
+    </nav>
+
+  </div>
+</header>
+
+<main>
+
+<!-- INICIO -->
+
+<section id="home" class="page active">
+
+  <div class="hero">
+
+    <div>
+
+      <h1>Agro IA 5.0</h1>
+
+      <p>
+        Una herramienta educativa para observar plantas,
+        registrar síntomas y obtener una orientación inicial
+        sobre posibles problemas.
+      </p>
+
+      <div class="hero-buttons">
+
+        <button class="btn btn-white" onclick="showPage('scan')">
+          Escanear planta
+        </button>
+
+        <button class="btn btn-secondary" onclick="showPage('plants')">
+          Ver plantas
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="hero-visual">
+
+      <svg viewBox="0 0 200 200">
+
+        <circle cx="100" cy="100" r="78"
+                fill="none"
+                stroke="white"
+                stroke-width="3"
+                opacity=".35"/>
+
+        <path d="M100 155 V65"
+              stroke="white"
+              stroke-width="8"
+              stroke-linecap="round"/>
+
+        <path d="M100 105 C55 105 42 77 45 48 C77 50 99 69 100 105Z"
+              fill="white"
+              opacity=".9"/>
+
+        <path d="M101 91 C103 55 128 37 158 37 C158 69 137 91 101 91Z"
+              fill="white"
+              opacity=".75"/>
+
+        <circle cx="100" cy="155" r="10" fill="white"/>
+
+      </svg>
+
+    </div>
+
+  </div>
+
+  <div class="section-title">
+    <h2>¿Cómo funciona?</h2>
+    <p>No necesitas conocer el nombre de la planta para comenzar.</p>
+  </div>
+
+  <div class="plants-grid">
+
+    <div class="plant-card">
+      <div class="plant-icon">01</div>
+      <h3>Fotografía</h3>
+      <p>Toma una fotografía o sube una imagen de la planta.</p>
+    </div>
+
+    <div class="plant-card">
+      <div class="plant-icon">02</div>
+      <h3>Observación</h3>
+      <p>Selecciona los síntomas que puedas observar.</p>
+    </div>
+
+    <div class="plant-card">
+      <div class="plant-icon">03</div>
+      <h3>Orientación</h3>
+      <p>Agro IA relaciona los síntomas con posibles problemas.</p>
+    </div>
+
+    <div class="plant-card">
+      <div class="plant-icon">04</div>
+      <h3>Historial</h3>
+      <p>Guarda tus resultados para consultarlos después.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ESCANEAR -->
+
+<section id="scan" class="page">
+
+  <div class="scanner-page">
+
+    <div class="scanner-title">
+      <h1>Escanear planta</h1>
+      <p>
+        Puedes comenzar directamente. No es obligatorio seleccionar la planta.
+      </p>
+    </div>
+
+    <div class="scan-card">
+
+      <!-- PASO 1 -->
+
+      <div class="scan-step">
+
+        <div class="step-number">1</div>
+
+        <div class="step-content">
+
+          <h3>Fotografía de la planta</h3>
+
+          <p>
+            Toma una foto de las hojas, tallo, fruto o zona donde notes el problema.
+          </p>
+
+          <div class="camera-box">
+
+            <video id="video" autoplay playsinline></video>
+
+            <div id="cameraPlaceholder" class="camera-placeholder">
+
+              <strong>Área de cámara</strong>
+
+              <span>
+                Pulsa "Activar cámara" para comenzar
+              </span>
+
+            </div>
+
+          </div>
+
+          <canvas id="photoCanvas"></canvas>
+
+          <div class="camera-controls">
+
+            <button class="btn btn-primary" id="startCameraBtn">
+              Activar cámara
+            </button>
+
+            <button class="btn btn-secondary" id="takePhotoBtn" disabled>
+              Tomar foto
+            </button>
+
+            <button class="btn btn-secondary" id="stopCameraBtn" disabled>
+              Detener cámara
+            </button>
+
+            <label class="btn btn-secondary upload-label">
+              Subir imagen
+              <input id="fileInput"
+                     type="file"
+                     accept="image/*"
+                     capture="environment">
+            </label>
+
+          </div>
+
+          <div id="preview" class="preview">
+            <p><strong>Imagen seleccionada:</strong></p>
+            <br>
+            <img id="previewImage" alt="Vista previa de planta">
+          </div>
+
+          <div id="cameraStatus" class="status"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PASO 2 -->
+
+      <div class="scan-step">
+
+        <div class="step-number">2</div>
+
+        <div class="step-content">
+
+          <h3>Planta opcional</h3>
+
+          <p>
+            Puedes dejar esta opción en "No sé" y continuar.
+            Si conoces la planta, seleccionarla puede mejorar la orientación.
+          </p>
+
+          <div class="optional-box">
+
+            <label for="plantSelect">
+              ¿Conoces la planta?
+            </label>
+
+            <select id="plantSelect">
+              <option value="">No sé / identificar después</option>
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PASO 3 -->
+
+      <div class="scan-step">
+
+        <div class="step-number">3</div>
+
+        <div class="step-content">
+
+          <h3>Selecciona síntomas</h3>
+
+          <p>
+            Esta parte también es opcional. Marca solamente lo que observes.
+          </p>
+
+          <div id="symptoms" class="symptoms"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ACCIONES -->
+
+      <div class="analyze-area">
+
+        <button class="btn btn-primary" id="analyzeBtn">
+          Analizar planta
+        </button>
+
+        <button class="btn btn-secondary" id="clearBtn">
+          Limpiar
+        </button>
+
+      </div>
+
+      <div id="scanStatus" class="status"></div>
+
+
+      <!-- RESULTADO -->
+
+      <div id="result" class="result">
+
+        <div class="result-header">
+
+          <div>
+            <h2 id="resultTitle">Resultado</h2>
+            <p id="resultPlant"></p>
+          </div>
+
+          <div id="resultScore" class="score">
+            Orientación
+          </div>
+
+        </div>
+
+        <div class="result-grid">
+
+          <div class="result-box">
+            <h4>Posible problema</h4>
+            <p id="resultProblem"></p>
+          </div>
+
+          <div class="result-box">
+            <h4>Síntomas observados</h4>
+            <p id="resultSymptoms"></p>
+          </div>
+
+          <div class="result-box">
+            <h4>Qué hacer</h4>
+            <p id="resultAction"></p>
+          </div>
+
+          <div class="result-box">
+            <h4>Prevención</h4>
+            <p id="resultPrevention"></p>
+          </div>
+
+        </div>
+
+        <div class="warning">
+
+          Este resultado es educativo y orientativo.
+          Agro IA 5.0 no sustituye la evaluación de un agrónomo
+          u otro especialista. La fotografía se utiliza como
+          referencia visual y esta versión no realiza un diagnóstico
+          profesional mediante inteligencia artificial.
+
+        </div>
+
+        <div class="analyze-area">
+
+          <button class="btn btn-primary" id="recommendBtn">
+            Ver recomendaciones
+          </button>
+
+          <button class="btn btn-secondary" onclick="clearScan()">
+            Nuevo escaneo
+          </button>
+
+        </div>
+
+        <div id="recommendationBox"
+             class="result-box"
+             style="display:none;margin-top:15px;">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PLANTAS -->
+
+<section id="plants" class="page">
+
+  <div class="section-title">
+    <h2>Catálogo mundial</h2>
+    <p>Plantas de diferentes regiones y tipos.</p>
+  </div>
+
+  <div class="toolbar">
+
+    <input id="plantSearch"
+           type="text"
+           placeholder="Buscar planta...">
+
+    <select id="typeFilter">
+      <option value="">Todos los tipos</option>
+    </select>
+
+  </div>
+
+  <div id="plantsGrid" class="plants-grid"></div>
+
+</section>
+
+
+<!-- PROBLEMAS -->
+
+<section id="problems" class="page">
+
+  <div class="section-title">
+    <h2>Problemas frecuentes</h2>
+    <p>Información educativa sobre posibles problemas de las plantas.</p>
+  </div>
+
+  <div id="problemsGrid" class="problem-grid"></div>
+
+</section>
+
+
+<!-- HISTORIAL -->
+
+<section id="history" class="page">
+
+  <div class="section-title">
+
+    <h2>Historial</h2>
+
+    <p>
+      Aquí se guardan los resultados realizados en este dispositivo.
+    </p>
+
+  </div>
+
+  <div style="margin-bottom:15px;">
+
+    <button class="btn btn-danger" id="clearHistoryBtn">
+      Borrar historial
+    </button>
+
+  </div>
+
+  <div id="historyList" class="history-list"></div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+  <div class="footer-inner">
+
+    <strong>AGRO IA 5.0</strong>
+
+    <p>
+      Herramienta educativa para observación y orientación
+      inicial sobre plantas.
+    </p>
+
+  </div>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   BASE DE DATOS
+========================================================= */
+
+const plants = [
+
+{
+name:"Mango",
+scientific:"Mangifera indica",
+type:"Frutal",
+region:"Perú / Asia tropical",
+symptoms:["Manchas oscuras en hojas","Frutos dañados","Hojas amarillas","Insectos pequeños"],
+problems:["Antracnosis","Cochinillas"]
+},
+
+{
+name:"Arroz",
+scientific:"Oryza sativa",
+type:"Cereal",
+region:"Perú / Asia",
+symptoms:["Manchas en hojas","Hojas amarillas","Tallos débiles"],
+problems:["Problema foliar"]
+},
+
+{
+name:"Maíz",
+scientific:"Zea mays",
+type:"Cereal",
+region:"América",
+symptoms:["Manchas en hojas","Hojas amarillas","Hojas comidas"],
+problems:["Problema foliar","Daño por insectos"]
+},
+
+{
+name:"Papa",
+scientific:"Solanum tuberosum",
+type:"Tubérculo",
+region:"Andes / América",
+symptoms:["Manchas oscuras en hojas","Hojas secas","Tallos débiles"],
+problems:["Tizón tardío"]
+},
+
+{
+name:"Tomate",
+scientific:"Solanum lycopersicum",
+type:"Hortaliza",
+region:"América",
+symptoms:["Hojas amarillas","Manchas en hojas","Insectos pequeños","Frutos dañados"],
+problems:["Pulgones","Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Cebolla",
+scientific:"Allium cepa",
+type:"Hortaliza",
+region:"Asia / mundial",
+symptoms:["Hojas amarillas","Manchas en hojas","Bulbo blando"],
+problems:["Problema foliar","Exceso de humedad"]
+},
+
+{
+name:"Limón",
+scientific:"Citrus × limon",
+type:"Frutal",
+region:"Asia / mundial",
+symptoms:["Hojas amarillas","Manchas en hojas","Insectos pequeños","Frutos dañados"],
+problems:["Cochinillas","Problema foliar"]
+},
+
+{
+name:"Naranja",
+scientific:"Citrus sinensis",
+type:"Frutal",
+region:"Asia / mundial",
+symptoms:["Hojas amarillas","Insectos pequeños","Frutos dañados"],
+problems:["Cochinillas","Daño por insectos"]
+},
+
+{
+name:"Palta",
+scientific:"Persea americana",
+type:"Frutal",
+region:"América",
+symptoms:["Hojas amarillas","Manchas en hojas","Frutos dañados"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Plátano",
+scientific:"Musa spp.",
+type:"Frutal",
+region:"Tropical",
+symptoms:["Manchas oscuras en hojas","Hojas amarillas","Frutos dañados"],
+problems:["Manchas foliares","Daño en frutos"]
+},
+
+{
+name:"Uva",
+scientific:"Vitis vinifera",
+type:"Frutal",
+region:"Europa / Asia / mundial",
+symptoms:["Polvo blanco","Frutos dañados","Manchas en hojas"],
+problems:["Oídio"]
+},
+
+{
+name:"Manzana",
+scientific:"Malus domestica",
+type:"Frutal",
+region:"Europa / Asia",
+symptoms:["Manchas en hojas","Frutos dañados","Hojas amarillas"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Fresa",
+scientific:"Fragaria × ananassa",
+type:"Frutal",
+region:"América / Europa",
+symptoms:["Manchas en hojas","Frutos dañados","Hojas amarillas"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Arándano",
+scientific:"Vaccinium corymbosum",
+type:"Frutal",
+region:"América / mundial",
+symptoms:["Hojas amarillas","Frutos dañados","Manchas en hojas"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Cacao",
+scientific:"Theobroma cacao",
+type:"Frutal",
+region:"América tropical",
+symptoms:["Manchas en hojas","Hojas amarillas","Frutos dañados"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Café",
+scientific:"Coffea arabica",
+type:"Cultivo permanente",
+region:"África / América tropical",
+symptoms:["Manchas en hojas","Hojas amarillas","Frutos dañados"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Papaya",
+scientific:"Carica papaya",
+type:"Frutal",
+region:"América tropical",
+symptoms:["Frutos dañados","Manchas en frutos","Hojas amarillas"],
+problems:["Daño en frutos","Problema foliar"]
+},
+
+{
+name:"Piña",
+scientific:"Ananas comosus",
+type:"Frutal",
+region:"América tropical",
+symptoms:["Hojas amarillas","Fruto dañado","Base húmeda"],
+problems:["Problema foliar","Exceso de humedad"]
+},
+
+{
+name:"Maracuyá",
+scientific:"Passiflora edulis",
+type:"Frutal",
+region:"América tropical",
+symptoms:["Hojas amarillas","Manchas en hojas","Frutos dañados"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Quinua",
+scientific:"Chenopodium quinoa",
+type:"Pseudocereal",
+region:"Andes",
+symptoms:["Hojas amarillas","Manchas en hojas","Insectos pequeños"],
+problems:["Daño por insectos","Problema foliar"]
+},
+
+{
+name:"Cebada",
+scientific:"Hordeum vulgare",
+type:"Cereal",
+region:"Europa / Asia",
+symptoms:["Manchas en hojas","Hojas amarillas","Tallos débiles"],
+problems:["Problema foliar"]
+},
+
+{
+name:"Trigo",
+scientific:"Triticum aestivum",
+type:"Cereal",
+region:"Europa / Asia / mundial",
+symptoms:["Manchas en hojas","Hojas amarillas","Tallos débiles"],
+problems:["Problema foliar"]
+},
+
+{
+name:"Haba",
+scientific:"Vicia faba",
+type:"Leguminosa",
+region:"Europa / Asia / Andes",
+symptoms:["Hojas amarillas","Insectos pequeños","Hojas deformadas"],
+problems:["Pulgones","Problema foliar"]
+},
+
+{
+name:"Arveja",
+scientific:"Pisum sativum",
+type:"Leguminosa",
+region:"Europa / Asia",
+symptoms:["Hojas amarillas","Insectos pequeños","Hojas deformadas"],
+problems:["Pulgones","Problema foliar"]
+},
+
+{
+name:"Aguaymanto",
+scientific:"Physalis peruviana",
+type:"Frutal",
+region:"Andes",
+symptoms:["Hojas amarillas","Insectos pequeños","Frutos dañados"],
+problems:["Pulgones","Daño en frutos"]
+},
+
+{
+name:"Tuna",
+scientific:"Opuntia ficus-indica",
+type:"Frutal",
+region:"América",
+symptoms:["Manchas","Tejido blando","Insectos pequeños"],
+problems:["Cochinillas","Exceso de agua"]
+},
+
+{
+name:"Chirimoya",
+scientific:"Annona cherimola",
+type:"Frutal",
+region:"Andes",
+symptoms:["Hojas amarillas","Frutos dañados","Insectos pequeños"],
+problems:["Cochinillas","Daño en frutos"]
+},
+
+{
+name:"Kion",
+scientific:"Zingiber officinale",
+type:"Rizoma",
+region:"Asia / tropical",
+symptoms:["Tallo blando","Hojas amarillas","Planta débil"],
+problems:["Pudrición","Nematodos"]
+},
+
+{
+name:"Cocona",
+scientific:"Solanum sessiliflorum",
+type:"Frutal",
+region:"Amazonía",
+symptoms:["Manchas en hojas","Frutos dañados","Hojas amarillas"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Palma aceitera",
+scientific:"Elaeis guineensis",
+type:"Cultivo permanente",
+region:"África / tropical",
+symptoms:["Hojas amarillas","Hojas secas","Insectos pequeños"],
+problems:["Problema foliar","Daño por insectos"]
+},
+
+{
+name:"Algarrobo",
+scientific:"Prosopis pallida",
+type:"Árbol",
+region:"Costa norte de Perú",
+symptoms:["Hojas amarillas","Ramas secas","Insectos pequeños"],
+problems:["Insectos chupadores","Estrés hídrico"]
+},
+
+{
+name:"Olivo",
+scientific:"Olea europaea",
+type:"Frutal",
+region:"Mediterráneo",
+symptoms:["Hojas amarillas","Manchas en hojas","Frutos dañados"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Almendro",
+scientific:"Prunus dulcis",
+type:"Frutal",
+region:"Mediterráneo",
+symptoms:["Hojas amarillas","Manchas en hojas","Frutos dañados"],
+problems:["Problema foliar","Daño en frutos"]
+},
+
+{
+name:"Coco",
+scientific:"Cocos nucifera",
+type:"Frutal",
+region:"Tropical",
+symptoms:["Hojas amarillas","Hojas secas","Frutos dañados"],
+problems:["Daño por insectos","Problema foliar"]
+},
+
+{
+name:"Té",
+scientific:"Camellia sinensis",
+type:"Cultivo permanente",
+region:"Asia",
+symptoms:["Hojas amarillas","Manchas en hojas","Insectos pequeños"],
+problems:["Problema foliar","Daño por insectos"]
+},
+
+{
+name:"Lavanda",
+scientific:"Lavandula spp.",
+type:"Aromática",
+region:"Mediterráneo",
+symptoms:["Hojas amarillas","Hojas secas","Suelo húmedo"],
+problems:["Exceso de humedad"]
+},
+
+{
+name:"Romero",
+scientific:"Salvia rosmarinus",
+type:"Aromática",
+region:"Mediterráneo",
+symptoms:["Hojas amarillas","Hojas secas","Suelo húmedo"],
+problems:["Exceso de humedad"]
+},
+
+{
+name:"Albahaca",
+scientific:"Ocimum basilicum",
+type:"Aromática",
+region:"Asia / mundial",
+symptoms:["Insectos pequeños","Hojas enrolladas","Hojas amarillas"],
+problems:["Pulgones"]
+},
+
+{
+name:"Menta",
+scientific:"Mentha spp.",
+type:"Aromática",
+region:"Europa / Asia",
+symptoms:["Insectos pequeños","Hojas enrolladas"],
+problems:["Pulgones"]
+},
+
+{
+name:"Rosa",
+scientific:"Rosa spp.",
+type:"Ornamental",
+region:"Asia / Europa",
+symptoms:["Insectos pequeños","Polvo blanco","Hojas enrolladas"],
+problems:["Pulgones","Oídio"]
+},
+
+{
+name:"Orquídea",
+scientific:"Orchidaceae spp.",
+type:"Ornamental",
+region:"Tropical / mundial",
+symptoms:["Hojas amarillas","Raíces blandas","Manchas en hojas"],
+problems:["Exceso de agua","Problema foliar"]
+},
+
+{
+name:"Lengua de suegra",
+scientific:"Dracaena trifasciata",
+type:"Ornamental",
+region:"África / mundial",
+symptoms:["Hojas blandas","Hojas amarillas","Base húmeda"],
+problems:["Exceso de riego"]
+},
+
+{
+name:"Oreja de elefante",
+scientific:"Colocasia esculenta",
+type:"Ornamental",
+region:"Asia tropical",
+symptoms:["Manchas en hojas","Hojas amarillas","Hojas caídas"],
+problems:["Problema foliar","Exceso de humedad"]
+},
+
+{
+name:"Cactus",
+scientific:"Cactaceae spp.",
+type:"Suculenta",
+region:"América",
+symptoms:["Tejido blando","Base húmeda","Coloración amarilla"],
+problems:["Exceso de agua"]
+},
+
+{
+name:"Bambú",
+scientific:"Bambusoideae",
+type:"Ornamental",
+region:"Asia / América",
+symptoms:["Hojas amarillas","Hojas secas","Tallos débiles"],
+problems:["Exceso de agua","Problema foliar"]
+},
+
+{
+name:"Arce japonés",
+scientific:"Acer palmatum",
+type:"Árbol",
+region:"Asia",
+symptoms:["Hojas secas","Hojas amarillas","Manchas en hojas"],
+problems:["Estrés hídrico","Problema foliar"]
+},
+
+{
+name:"Eucalipto",
+scientific:"Eucalyptus spp.",
+type:"Árbol",
+region:"Australia / mundial",
+symptoms:["Hojas amarillas","Hojas secas","Insectos pequeños"],
+problems:["Estrés hídrico","Daño por insectos"]
+},
+
+{
+name:"Pino",
+scientific:"Pinus spp.",
+type:"Árbol",
+region:"Hemisferio norte / mundial",
+symptoms:["Hojas amarillas","Hojas secas","Insectos pequeños"],
+problems:["Daño por insectos","Estrés hídrico"]
+},
+
+{
+name:"Roble",
+scientific:"Quercus spp.",
+type:"Árbol",
+region:"Europa / América / Asia",
+symptoms:["Hojas amarillas","Manchas en hojas","Hojas secas"],
+problems:["Problema foliar","Estrés hídrico"]
+},
+
+{
+name:"Soja",
+scientific:"Glycine max",
+type:"Leguminosa",
+region:"Asia / América",
+symptoms:["Hojas amarillas","Hojas comidas","Insectos pequeños"],
+problems:["Deficiencia nutricional","Daño por insectos"]
+},
+
+{
+name:"Girasol",
+scientific:"Helianthus annuus",
+type:"Oleaginosa",
+region:"América",
+symptoms:["Hojas amarillas","Hojas comidas","Insectos pequeños"],
+problems:["Deficiencia nutricional","Daño por insectos"]
+},
+
+{
+name:"Algodón",
+scientific:"Gossypium spp.",
+type:"Cultivo industrial",
+region:"Tropical / subtropical",
+symptoms:["Hojas amarillas","Insectos pequeños","Hojas deformadas"],
+problems:["Pulgones","Insectos chupadores"]
+},
+
+{
+name:"Caña de azúcar",
+scientific:"Saccharum officinarum",
+type:"Cultivo industrial",
+region:"Tropical",
+symptoms:["Hojas amarillas","Tallos débiles","Hojas secas"],
+problems:["Deficiencia nutricional","Daño por insectos"]
+},
+
+{
+name:"Pimiento",
+scientific:"Capsicum annuum",
+type:"Hortaliza",
+region:"América",
+symptoms:["Hojas enrolladas","Insectos pequeños","Frutos dañados"],
+problems:["Pulgones","Daño en frutos"]
+},
+
+{
+name:"Zanahoria",
+scientific:"Daucus carota",
+type:"Hortaliza",
+region:"Europa / Asia",
+symptoms:["Hojas amarillas","Raíz dañada","Planta débil"],
+problems:["Daño en raíz","Deficiencia nutricional"]
+},
+
+{
+name:"Lechuga",
+scientific:"Lactuca sativa",
+type:"Hortaliza",
+region:"Mediterráneo / mundial",
+symptoms:["Hojas amarillas","Hojas comidas","Hojas caídas"],
+problems:["Daño por insectos","Exceso de humedad"]
+},
+
+{
+name:"Espinaca",
+scientific:"Spinacia oleracea",
+type:"Hortaliza",
+region:"Asia / Europa",
+symptoms:["Hojas amarillas","Manchas en hojas","Hojas comidas"],
+problems:["Problema foliar","Deficiencia nutricional"]
+},
+
+{
+name:"Brócoli",
+scientific:"Brassica oleracea",
+type:"Hortaliza",
+region:"Europa / mundial",
+symptoms:["Hojas comidas","Hojas amarillas","Insectos pequeños"],
+problems:["Daño por insectos","Deficiencia nutricional"]
+},
+
+{
+name:"Repollo",
+scientific:"Brassica oleracea",
+type:"Hortaliza",
+region:"Europa / mundial",
+symptoms:["Hojas comidas","Hojas amarillas","Insectos pequeños"],
+problems:["Daño por insectos","Problema foliar"]
+}
+
+];
+
+
+/* =========================================================
+   PROBLEMAS
+========================================================= */
+
+const problemInfo = {
+
+"Antracnosis":{
+description:"Problema asociado a manchas y lesiones en diferentes partes de la planta.",
+action:"Retirar partes muy afectadas y mejorar la ventilación. Evitar mojar continuamente el follaje.",
+prevention:"Mantener buena ventilación, retirar restos vegetales y evitar exceso de humedad."
+},
+
+"Cochinillas":{
+description:"Insectos que pueden aparecer sobre hojas, tallos y otras partes de la planta.",
+action:"Revisar cuidadosamente hojas y tallos y retirar los insectos visibles.",
+prevention:"Revisar periódicamente la planta y mantenerla limpia."
+},
+
+"Pulgones":{
+description:"Pequeños insectos que pueden causar hojas enrolladas o deformadas.",
+action:"Revisar brotes y hojas nuevas. Retirar los insectos visibles y consultar métodos adecuados.",
+prevention:"Revisar periódicamente los brotes nuevos."
+},
+
+"Oídio":{
+description:"Problema que puede producir una apariencia de polvo blanco sobre hojas.",
+action:"Separar plantas muy afectadas si es posible y mejorar ventilación.",
+prevention:"Evitar exceso de humedad sobre las hojas."
+},
+
+"Tizón tardío":{
+description:"Problema que puede producir manchas oscuras y deterioro del follaje.",
+action:"Retirar hojas muy afectadas y evitar mantener el follaje constantemente húmedo.",
+prevention:"Buena ventilación y control de humedad."
+},
+
+"Problema foliar":{
+description:"Categoría general para alteraciones visibles en las hojas.",
+action:"Revisar hojas, iluminación, riego y presencia de insectos.",
+prevention:"Mantener condiciones adecuadas de riego y ventilación."
+},
+
+"Daño en frutos":{
+description:"Alteraciones visibles en frutos como manchas, lesiones o deterioro.",
+action:"Revisar los frutos y retirar los que estén muy afectados.",
+prevention:"Observar periódicamente los frutos y mantener higiene alrededor de la planta."
+},
+
+"Daño por insectos":{
+description:"Daños posiblemente relacionados con insectos que comen o afectan tejidos.",
+action:"Revisar el envés de las hojas, tallos y brotes.",
+prevention:"Inspección periódica de la planta."
+},
+
+"Exceso de humedad":{
+description:"La humedad excesiva puede favorecer problemas en raíces, tallos y hojas.",
+action:"Revisar el drenaje y evitar mantener el suelo permanentemente saturado.",
+prevention:"Utilizar un sustrato con buen drenaje."
+},
+
+"Exceso de agua":{
+description:"El riego excesivo puede provocar amarillamiento y deterioro de raíces.",
+action:"Revisar el drenaje y ajustar la frecuencia de riego según la planta.",
+prevention:"Permitir que el sustrato se seque adecuadamente cuando corresponda."
+},
+
+"Pudrición":{
+description:"Deterioro de tejidos que puede estar relacionado con exceso de humedad.",
+action:"Revisar raíces y base de la planta y mejorar el drenaje.",
+prevention:"Evitar acumulaciones de agua."
+},
+
+"Nematodos":{
+description:"Organismos microscópicos que pueden afectar raíces de algunas plantas.",
+action:"Si el problema persiste, solicitar evaluación de un especialista.",
+prevention:"Utilizar material vegetal sano y mantener buenas prácticas de cultivo."
+},
+
+"Estrés hídrico":{
+description:"La planta puede mostrar señales relacionadas con falta o exceso de agua.",
+action:"Revisar humedad del suelo y ajustar el riego de acuerdo con la especie.",
+prevention:"Mantener una rutina de riego adecuada."
+},
+
+"Deficiencia nutricional":{
+description:"La falta de determinados nutrientes puede causar cambios de color y crecimiento.",
+action:"Revisar las condiciones del suelo antes de aplicar fertilizantes.",
+prevention:"Mantener una nutrición equilibrada."
+},
+
+"Daño en raíz":{
+description:"Alteraciones visibles o posibles problemas en el sistema radicular.",
+action:"Revisar cuidadosamente las raíces si es posible.",
+prevention:"Evitar compactación y exceso de agua."
+},
+
+"Insectos chupadores":{
+description:"Algunos insectos se alimentan de los tejidos vegetales y pueden debilitar la planta.",
+action:"Revisar especialmente hojas nuevas y brotes.",
+prevention:"Inspección frecuente."
+}
+
+};
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let stream = null;
+let currentImage = null;
+
+
+/* =========================================================
+   NAVEGACIÓN
+========================================================= */
+
+function showPage(page){
+
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
+
+  const target = document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page === page
+    );
+  });
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   INICIO
+========================================================= */
+
+function init(){
+
+  populatePlantSelect();
+  renderSymptoms();
+  renderPlants();
+  renderProblems();
+  renderHistory();
+
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      showPage(btn.dataset.page);
+    });
+  });
+
+  document.getElementById("startCameraBtn")
+    .addEventListener("click",startCamera);
+
+  document.getElementById("takePhotoBtn")
+    .addEventListener("click",takePhoto);
+
+  document.getElementById("stopCameraBtn")
+    .addEventListener("click",stopCamera);
+
+  document.getElementById("fileInput")
+    .addEventListener("change",handleFile);
+
+  document.getElementById("analyzeBtn")
+    .addEventListener("click",analyze);
+
+  document.getElementById("clearBtn")
+    .addEventListener("click",clearScan);
+
+  document.getElementById("recommendBtn")
+    .addEventListener("click",recommend);
+
+  document.getElementById("plantSearch")
+    .addEventListener("input",renderPlants);
+
+  document.getElementById("typeFilter")
+    .addEventListener("change",renderPlants);
+
+  document.getElementById("clearHistoryBtn")
+    .addEventListener("click",clearHistory);
+
+}
+
+
+/* =========================================================
+   PLANT SELECT
+========================================================= */
+
+function populatePlantSelect(){
+
+  const select = document.getElementById("plantSelect");
+
+  plants
+    .sort((a,b)=>a.name.localeCompare(b.name))
+    .forEach(plant=>{
+
+      const option = document.createElement("option");
+
+      option.value = plant.name;
+
+      option.textContent =
+        `${plant.name} — ${plant.scientific}`;
+
+      select.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================================================
+   SÍNTOMAS
+========================================================= */
+
+function getAllSymptoms(){
+
+  const set = new Set();
+
+  plants.forEach(plant=>{
+    plant.symptoms.forEach(symptom=>{
+      set.add(symptom);
+    });
+  });
+
+  return [...set].sort();
+
+}
+
+
+function renderSymptoms(){
+
+  const container =
+    document.getElementById("symptoms");
+
+  container.innerHTML = "";
+
+  getAllSymptoms().forEach(symptom=>{
+
+    const label =
+      document.createElement("label");
+
+    label.className = "symptom";
+
+    label.innerHTML = `
+      <input type="checkbox"
+             value="${escapeHTML(symptom)}">
+      <span>${escapeHTML(symptom)}</span>
+    `;
+
+    const checkbox =
+      label.querySelector("input");
+
+    checkbox.addEventListener("change",()=>{
+      label.classList.toggle(
+        "selected",
+        checkbox.checked
+      );
+    });
+
+    container.appendChild(label);
+
+  });
+
+}
+
+
+/* =========================================================
+   CÁMARA
+========================================================= */
+
+async function startCamera(){
+
+  try{
+
+    if(stream){
+      stopCamera();
+    }
+
+    stream =
+      await navigator.mediaDevices.getUserMedia({
+        video:{
+          facingMode:{
+            ideal:"environment"
+          }
+        },
+        audio:false
+      });
+
+    const video =
+      document.getElementById("video");
+
+    video.srcObject = stream;
+    video.style.display = "block";
+
+    document.getElementById("cameraPlaceholder")
+      .style.display = "none";
+
+    document.getElementById("takePhotoBtn")
+      .disabled = false;
+
+    document.getElementById("stopCameraBtn")
+      .disabled = false;
+
+    showCameraStatus(
+      "Cámara activada correctamente.",
+      "success"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showCameraStatus(
+      "No se pudo activar la cámara. Puedes subir una imagen desde tu dispositivo.",
+      "error"
+    );
+
+  }
+
+}
+
+
+function takePhoto(){
+
+  if(!stream) return;
+
+  const video =
+    document.getElementById("video");
+
+  const canvas =
+    document.getElementById("photoCanvas");
+
+  const width =
+    video.videoWidth || 640;
+
+  const height =
+    video.videoHeight || 480;
+
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.drawImage(
+    video,
+    0,
+    0,
+    width,
+    height
+  );
+
+  canvas.toBlob(blob=>{
+
+    if(!blob) return;
+
+    const url =
+      URL.createObjectURL(blob);
+
+    currentImage = {
+      url:url,
+      name:"Foto tomada con cámara"
+    };
+
+    showPreview(url);
+
+    showCameraStatus(
+      "Foto tomada correctamente.",
+      "success"
+    );
+
+  },"image/jpeg",.9);
+
+}
+
+
+function stopCamera(){
+
+  if(stream){
+
+    stream.getTracks().forEach(track=>{
+      track.stop();
+    });
+
+    stream = null;
+
+  }
+
+  const video =
+    document.getElementById("video");
+
+  video.srcObject = null;
+  video.style.display = "none";
+
+  document.getElementById("cameraPlaceholder")
+    .style.display = "block";
+
+  document.getElementById("takePhotoBtn")
+    .disabled = true;
+
+  document.getElementById("stopCameraBtn")
+    .disabled = true;
+
+}
+
+
+function handleFile(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  if(!file.type.startsWith("image/")){
+
+    showCameraStatus(
+      "Selecciona una imagen válida.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  const url =
+    URL.createObjectURL(file);
+
+  currentImage = {
+    url:url,
+    name:file.name
+  };
+
+  showPreview(url);
+
+  showCameraStatus(
+    "Imagen cargada correctamente.",
+    "success"
+  );
+
+}
+
+
+function showPreview(url){
+
+  const preview =
+    document.getElementById("preview");
+
+  const image =
+    document.getElementById("previewImage");
+
+  image.src = url;
+
+  preview.style.display = "block";
+
+}
+
+
+function showCameraStatus(message,type){
+
+  const box =
+    document.getElementById("cameraStatus");
+
+  box.textContent = message;
+
+  box.className =
+    `status show ${type}`;
+
+}
+
+
+/* =========================================================
+   ANÁLISIS
+========================================================= */
+
+function analyze(){
+
+  const selectedSymptoms =
+    [...document.querySelectorAll(
+      "#symptoms input:checked"
+    )].map(input=>input.value);
+
+  const plantName =
+    document.getElementById("plantSelect").value;
+
+  if(!currentImage && selectedSymptoms.length === 0){
+
+    showStatus(
+      "Para realizar una orientación necesitas tomar/subir una foto o seleccionar al menos un síntoma.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  let selectedPlant = null;
+
+  if(plantName){
+
+    selectedPlant =
+      plants.find(p=>p.name === plantName);
+
+  }
+
+  let candidates = [];
+
+  /*
+    Si el usuario seleccionó una planta,
+    utilizamos sus posibles problemas.
+  */
+
+  if(selectedPlant){
+
+    selectedPlant.problems.forEach(problem=>{
+
+      let matches =
+        selectedSymptoms.filter(symptom=>
+          selectedPlant.symptoms.includes(symptom)
+        ).length;
+
+      candidates.push({
+        problem:problem,
+        matches:matches
+      });
+
+    });
+
+  }else{
+
+    /*
+      Si NO seleccionó planta,
+      buscamos coincidencias entre todas
+      las plantas del catálogo.
+    */
+
+    plants.forEach(plant=>{
+
+      let matches =
+        selectedSymptoms.filter(symptom=>
+          plant.symptoms.includes(symptom)
+        ).length;
+
+      plant.problems.forEach(problem=>{
+
+        candidates.push({
+          problem:problem,
+          matches:matches,
+          plant:plant.name
+        });
+
+      });
+
+    });
+
+  }
+
+
+  /*
+    Sin síntomas:
+    damos una orientación general.
+  */
+
+  if(candidates.length === 0){
+
+    candidates.push({
+      problem:"Problema no determinado",
+      matches:0
+    });
+
+  }
+
+
+  candidates.sort((a,b)=>
+    b.matches - a.matches
+  );
+
+  const best =
+    candidates[0];
+
+  let percentage = 0;
+
+  if(selectedSymptoms.length > 0){
+
+    const max =
+      selectedPlant
+      ? selectedPlant.symptoms.length
+      : Math.max(
+          ...plants.map(p=>p.symptoms.length)
+        );
+
+    percentage =
+      Math.min(
+        100,
+        Math.round(
+          (best.matches /
+          Math.max(1,Math.min(max,selectedSymptoms.length)))
+          *100
+        )
+      );
+
+  }
+
+
+  const result =
+    document.getElementById("result");
+
+  result.classList.add("show");
+
+  document.getElementById("resultTitle")
+    .textContent =
+      best.problem;
+
+  document.getElementById("resultPlant")
+    .textContent =
+      selectedPlant
+      ? `Planta seleccionada: ${selectedPlant.name}`
+      : "Planta: no seleccionada";
+
+  document.getElementById("resultScore")
+    .textContent =
+      selectedSymptoms.length
+      ? `${percentage}% de coincidencia`
+      : "Orientación general";
+
+  document.getElementById("resultProblem")
+    .textContent =
+      problemInfo[best.problem]?.description ||
+      "No se pudo determinar una causa específica.";
+
+  document.getElementById("resultSymptoms")
+    .textContent =
+      selectedSymptoms.length
+      ? selectedSymptoms.join(", ")
+      : "No se seleccionaron síntomas.";
+
+  document.getElementById("resultAction")
+    .textContent =
+      problemInfo[best.problem]?.action ||
+      "Observa la planta durante los próximos días y considera consultar a un especialista.";
+
+  document.getElementById("resultPrevention")
+    .textContent =
+      problemInfo[best.problem]?.prevention ||
+      "Mantén buenas condiciones de riego, iluminación, ventilación e higiene.";
+
+  document.getElementById("recommendationBox")
+    .style.display = "none";
+
+  saveHistory({
+    date:new Date().toLocaleString(),
+    plant:selectedPlant
+      ? selectedPlant.name
+      : "No identificada",
+    problem:best.problem,
+    symptoms:selectedSymptoms,
+    score:percentage
+  });
+
+  showStatus(
+    "Análisis orientativo completado.",
+    "success"
+  );
+
+  result.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+
+/* =========================================================
+   RECOMENDACIONES
+========================================================= */
+
+function recommend(){
+
+  const box =
+    document.getElementById("recommendationBox");
+
+  const problem =
+    document.getElementById("resultTitle")
+      .textContent;
+
+  const info =
+    problemInfo[problem];
+
+  box.style.display = "block";
+
+  box.innerHTML = `
+    <h4>Recomendaciones para ${escapeHTML(problem)}</h4>
+    <p style="margin-top:7px;">
+      ${escapeHTML(
+        info
+        ? info.action
+        : "Observa la planta y consulta a un especialista si el problema continúa."
+      )}
+    </p>
+
+    <p style="margin-top:10px;">
+      <strong>Prevención:</strong>
+      ${escapeHTML(
+        info
+        ? info.prevention
+        : "Mantén buenas condiciones de cultivo."
+      )}
+    </p>
+  `;
+
+}
+
+
+/* =========================================================
+   LIMPIAR
+========================================================= */
+
+function clearScan(){
+
+  stopCamera();
+
+  currentImage = null;
+
+  document.getElementById("preview")
+    .style.display = "none";
+
+  document.getElementById("previewImage")
+    .src = "";
+
+  document.getElementById("fileInput")
+    .value = "";
+
+  document.getElementById("plantSelect")
+    .value = "";
+
+  document.querySelectorAll(
+    "#symptoms input"
+  ).forEach(input=>{
+
+    input.checked = false;
+
+    input.closest(".symptom")
+      ?.classList.remove("selected");
+
+  });
+
+  document.getElementById("result")
+    .classList.remove("show");
+
+  document.getElementById("recommendationBox")
+    .style.display = "none";
+
+  document.getElementById("scanStatus")
+    .className = "status";
+
+  showCameraStatus(
+    "Escáner listo para una nueva planta.",
+    "info"
+  );
+
+}
+
+
+/* =========================================================
+   ESTADOS
+========================================================= */
+
+function showStatus(message,type){
+
+  const box =
+    document.getElementById("scanStatus");
+
+  box.textContent = message;
+
+  box.className =
+    `status show ${type}`;
+
+}
+
+
+/* =========================================================
+   PLANTAS
+========================================================= */
+
+function renderPlants(){
+
+  const grid =
+    document.getElementById("plantsGrid");
+
+  const search =
+    document.getElementById("plantSearch")
+      .value
+      .toLowerCase();
+
+  const filter =
+    document.getElementById("typeFilter")
+      .value;
+
+  const types =
+    [...new Set(
+      plants.map(p=>p.type)
+    )].sort();
+
+  const typeSelect =
+    document.getElementById("typeFilter");
+
+  if(typeSelect.options.length === 1){
+
+    types.forEach(type=>{
+
+      const option =
+        document.createElement("option");
+
+      option.value = type;
+      option.textContent = type;
+
+      typeSelect.appendChild(option);
+
+    });
+
+  }
+
+
+  const filtered =
+    plants.filter(plant=>{
+
+      const matchesSearch =
+        plant.name
+          .toLowerCase()
+          .includes(search) ||
+        plant.scientific
+          .toLowerCase()
+          .includes(search);
+
+      const matchesType =
+        !filter ||
+        plant.type === filter;
+
+      return matchesSearch && matchesType;
+
+    });
+
+
+  if(filtered.length === 0){
+
+    grid.innerHTML = `
+      <div class="empty">
+        No encontramos esa planta.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    filtered.map(plant=>{
+
+      const initials =
+        plant.name
+          .split(" ")
+          .map(word=>word[0])
+          .join("")
+          .substring(0,2)
+          .toUpperCase();
+
+      return `
+        <div class="plant-card">
+
+          <div class="plant-icon">
+            ${escapeHTML(initials)}
+          </div>
+
+          <h3>${escapeHTML(plant.name)}</h3>
+
+          <p>
+            <em>${escapeHTML(plant.scientific)}</em>
+          </p>
+
+          <p style="margin-top:5px;">
+            ${escapeHTML(plant.type)}
+          </p>
+
+          <p style="margin-top:5px;">
+            ${escapeHTML(plant.region)}
+          </p>
+
+          <button
+            class="btn btn-secondary"
+            style="margin-top:12px;width:100%;"
+            onclick="usePlant('${escapeHTML(plant.name)}')">
+            Usar en escáner
+          </button>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+
+function usePlant(name){
+
+  const select =
+    document.getElementById("plantSelect");
+
+  select.value = name;
+
+  showPage("scan");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   PROBLEMAS
+========================================================= */
+
+function renderProblems(){
+
+  const grid =
+    document.getElementById("problemsGrid");
+
+  grid.innerHTML =
+    Object.entries(problemInfo)
+      .map(([name,info])=>`
+
+        <div class="problem-card">
+
+          <h3>${escapeHTML(name)}</h3>
+
+          <p>
+            ${escapeHTML(info.description)}
+          </p>
+
+          <p style="margin-top:10px;">
+            <strong>Prevención:</strong>
+            ${escapeHTML(info.prevention)}
+          </p>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+
+/* =========================================================
+   HISTORIAL
+========================================================= */
+
+function saveHistory(item){
+
+  let history =
+    JSON.parse(
+      localStorage.getItem("agroIAHistory") || "[]"
+    );
+
+  history.unshift(item);
+
+  history =
+    history.slice(0,30);
+
+  localStorage.setItem(
+    "agroIAHistory",
+    JSON.stringify(history)
+  );
+
+  renderHistory();
+
+}
+
+
+function renderHistory(){
+
+  const container =
+    document.getElementById("historyList");
+
+  const history =
+    JSON.parse(
+      localStorage.getItem("agroIAHistory") || "[]"
+    );
+
+  if(history.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        Todavía no tienes análisis guardados.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    history.map((item,index)=>`
+
+      <div class="history-card">
+
+        <strong>
+          ${escapeHTML(item.problem)}
+        </strong>
+
+        <p>
+          Planta:
+          ${escapeHTML(item.plant)}
+        </p>
+
+        <p>
+          Fecha:
+          ${escapeHTML(item.date)}
+        </p>
+
+        <p>
+          Síntomas:
+          ${escapeHTML(
+            item.symptoms.length
+            ? item.symptoms.join(", ")
+            : "No registrados"
+          )}
+        </p>
+
+        <p>
+          Coincidencia:
+          ${item.score}%
+        </p>
+
+      </div>
+
+    `)
+    .join("");
+
+}
+
+
+function clearHistory(){
+
+  if(!confirm(
+    "¿Quieres borrar todo el historial de Agro IA?"
+  )){
+    return;
+  }
+
+  localStorage.removeItem("agroIAHistory");
+
+  renderHistory();
+
+}
+
+
+/* =========================================================
+   SEGURIDAD HTML
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
+
+</script>
+
+</body>
+</html>
