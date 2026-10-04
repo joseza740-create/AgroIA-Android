@@ -1,4 +1,4 @@
-name: Crear APK Agro IA
+name: Crear APK FOLVEXA
 
 on:
   workflow_dispatch:
