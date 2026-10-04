@@ -39,7 +39,7 @@ jobs:
               }
           }
 
-          rootProject.name = "AgroIA"
+          rootProject.name = "FOLVEXA"
           include(":app")
           EOF
 
