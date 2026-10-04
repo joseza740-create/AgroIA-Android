@@ -89,7 +89,7 @@ jobs:
 
               <application
                   android:theme="@style/AppTheme"
-                  android:label="Agro IA"
+                  android:label="FOLVEXA"
                   android:usesCleartextTraffic="true">
 
                   <activity
